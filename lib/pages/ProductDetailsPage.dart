@@ -6,13 +6,21 @@ import 'package:uws/widgets/CustomAppBar.dart';
 
 import '../model/Cart.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({super.key});
+
+  @override
+  State<ProductDetailsPage> createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  final TextEditingController _quantityController =
+      TextEditingController(text: '1');
 
   @override
   Widget build(BuildContext context) {
     final Product product =
-    ModalRoute.of(context)!.settings.arguments as Product;
+        ModalRoute.of(context)!.settings.arguments as Product;
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -25,7 +33,9 @@ class ProductDetailsPage extends StatelessWidget {
             bool isSmallScreen = constraints.maxWidth < 800;
 
             // Use Column for small screens and Row for larger screens
-            return isSmallScreen ? buildVerticalLayout(product) : buildHorizontalLayout(product);
+            return isSmallScreen
+                ? buildVerticalLayout(product)
+                : buildHorizontalLayout(product);
           },
         ),
       ),
@@ -75,12 +85,10 @@ class ProductDetailsPage extends StatelessWidget {
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          Expanded(
-            child: Text(
-              product.description,
-              style: const TextStyle(color: Colors.black, fontSize: 18),
-              softWrap: true,
-            ),
+          Text(
+            product.description,
+            style: const TextStyle(color: Colors.black, fontSize: 18),
+            softWrap: true,
           ),
           const SizedBox(height: 16),
           Text(
@@ -95,9 +103,10 @@ class ProductDetailsPage extends StatelessWidget {
             "Quantity:",
             style: TextStyle(fontSize: 16),
           ),
-          const TextField(
+          TextField(
+            controller: _quantityController,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               hintText: "1",
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -106,33 +115,39 @@ class ProductDetailsPage extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Builder(
-                builder: (context) {
-                  return ElevatedButton(
-                    onPressed: () {
+              Builder(builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    int quantity = int.tryParse(_quantityController.text) ?? 1;
+                    for (int i = 0; i < quantity; i++) {
                       Provider.of<Cart>(context, listen: false).addItem(product);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "Add to Cart",
-                        style: TextStyle(fontSize: 17),
-                      ),
+                    }
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Add to Cart",
+                      style: TextStyle(fontSize: 17),
                     ),
-                  );
-                }
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Checkout",
-                    style: TextStyle(fontSize: 17),
                   ),
-                ),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              )
+                );
+              }),
+              Builder(builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/checkout");
+                  },
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Checkout",
+                      style: TextStyle(fontSize: 17),
+                    ),
+                  ),
+                );
+              })
             ],
           )
         ],

@@ -72,7 +72,11 @@ class CartProduct extends StatelessWidget {
                             Provider.of<Cart>(context, listen: false).removeItem(cartItem.product.id);
                           }
                         }, child: const Icon(Icons.remove)),
-                        Text("${cartItem.quantity}"),
+                        const SizedBox(width: 10,),
+                        Text("${cartItem.quantity}",style: const TextStyle(
+                          fontWeight: FontWeight.normal,fontSize: 18,
+                        ),),
+                        const SizedBox(width: 10,),
                         ElevatedButton(onPressed: () {
                           cartItem.quantity += 1;
                           Provider.of<Cart>(context, listen: false).notifyListeners();
