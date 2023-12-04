@@ -6,6 +6,7 @@ import 'package:uws/widgets/BootstrapContainer.dart';
 import 'package:uws/widgets/CheckoutItem.dart';
 import 'package:uws/widgets/CustomAppBar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uws/widgets/ShowMessage.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -181,6 +182,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff198754),
+                        ),
                         onPressed: _orderPlaced ? (){
                           Navigator.pushNamed(context, "/");
                         }  : () async {
@@ -227,11 +231,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               });
 
                               // Show success message
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Order Placed Successfully')),
-                              );
-
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   const SnackBar(
+                              //       content: Text('Order Placed Successfully')),
+                              // );
                               cart.clearCart();
 
                             } catch (e) {
@@ -246,6 +249,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         },
                         child: _orderPlaced ? const Text("Go To Home") : const Text('Finish'),
                       ),
+                      _orderPlaced ? const ShowMessage( message: 'Order Placed Successfully',success: true,) : Container(),
                     ],
                   ),
                 ),

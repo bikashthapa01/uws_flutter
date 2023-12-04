@@ -117,6 +117,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             children: [
               Builder(builder: (context) {
                 return ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff0d6efd)),
                   onPressed: () {
                     int quantity = int.tryParse(_quantityController.text) ?? 1;
                     for (int i = 0; i < quantity; i++) {
@@ -138,7 +139,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     Navigator.pushNamed(context, "/checkout");
                   },
                   style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                      ElevatedButton.styleFrom(backgroundColor: const Color(0xff198754)),
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(

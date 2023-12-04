@@ -74,6 +74,7 @@ class ProductWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ElevatedButton(
+                      style:ElevatedButton.styleFrom(backgroundColor: const Color(0xff0d6efd)),
                       onPressed: () {
                         Provider.of<Cart>(context, listen: false).addItem(product);
                       },

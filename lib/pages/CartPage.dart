@@ -53,14 +53,14 @@ class CartPage extends StatelessWidget {
                       Text("Total: \$${cart.totalAmount.toStringAsFixed(2)}",style: const TextStyle(fontSize: 28,fontWeight: FontWeight.bold),),
                       const SizedBox(height: 10,),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff198754)),
                         onPressed: () {
                           // Navigate to checkout page
                           Navigator.pushNamed(context, "/checkout");
                         },
                         child: const Padding(
                           padding: EdgeInsets.all(4.0),
-                          child: Text('Proceed to Checkout',style: TextStyle(fontSize: 20),),
+                          child: Text('Proceed to Checkout',style: TextStyle(fontSize: 18),),
                         ),
                       ),
                     ],
